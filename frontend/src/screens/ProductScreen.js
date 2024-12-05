@@ -16,13 +16,19 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 import { productDetail } from "../actions/productsAction";
+import CartScreen from "./CartScreen";
 
 function ProductScreen() {
+  const [qty, setQty] = useState(1);
   const { id } = useParams();
   const dispatch = useDispatch();
   const productD = useSelector((state) => state.productD);
   const { product } = productD;
+  const navigate = useNavigate();
 
+  const handleAddToCart = () => {
+    navigate(`/cart/${id}?qty=${qty}`);
+  };
   useEffect(() => {
     dispatch(productDetail(id));
   }, [dispatch]);
@@ -74,8 +80,12 @@ function ProductScreen() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Qty:</Col>
-                    <Col>
-                      <Form.Select aria-label="Default select example">
+                    <Col xs="auto" className="my-1">
+                      <Form.Select
+                        aria-label="Default select example"
+                        value={qty}
+                        onChange={(e) => setQty(e.target.value)}
+                      >
                         {Array.from(
                           { length: product.countInStock },
                           (_, index) => index + 1
@@ -94,6 +104,7 @@ function ProductScreen() {
                   className="btn-block"
                   type="button"
                   disabled={product.countInStock == 0}
+                  onClick={handleAddToCart}
                 >
                   Weiter
                 </Button>
