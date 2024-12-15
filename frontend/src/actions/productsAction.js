@@ -10,7 +10,7 @@ import axios from "axios";
 export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCTS_REQUEST });
-    const { data } = await axios.get("http://127.0.0.1:8000/");
+    const { data } = await axios.get("http://127.0.0.1:8000/api/products/");
 
     dispatch({ type: PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
@@ -27,7 +27,9 @@ export const listProducts = () => async (dispatch) => {
 export const productDetail = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_REQUEST });
-    const { data } = await axios.get(`/product/${id}/`);
+    const { data } = await axios.get(
+      `http://127.0.0.1:8000/api/products/${id}/`
+    );
 
     dispatch({ type: PRODUCT_SUCCESS, payload: data });
   } catch (error) {

@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addtoCart } from "../actions/cartAction";
 import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
+import ShippingScreen from "./ShippingScreen";
 function CartScreen() {
+  const navigate = useNavigate();
   const { id } = useParams();
+
   const location = useLocation();
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
@@ -21,6 +24,12 @@ function CartScreen() {
       dispatch(addtoCart(id, qty));
     }
   }, [dispatch, id, qty]);
+
+  const handleClick = () => {
+    console.log("🚀 ~ handleClick ~ handleClick:");
+
+    navigate("/shipping");
+  };
   return (
     <Row>
       <Col md={8}>
@@ -82,8 +91,7 @@ function CartScreen() {
             </ListGroup.Item>
             <ListGroup.Item>
               <Row>
-                <Button type="button" variant="primary">
-                  {" "}
+                <Button type="button" variant="primary" onClick={handleClick}>
                   zum kasse
                 </Button>
               </Row>

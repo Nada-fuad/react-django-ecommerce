@@ -1,7 +1,7 @@
 import { ADD_TO_CART } from "../constants/cartConstants";
 import axios from "axios";
 export const addtoCart = (id, qty) => async (dispatch, getState) => {
-  const { data } = await axios.get(`/product/${id}`);
+  const { data } = await axios.get(`http://127.0.0.1:8000/api/products/${id}`);
 
   console.log("🚀 ~ addtoCart ~ data:", data);
   if (!data || !data._id) {
